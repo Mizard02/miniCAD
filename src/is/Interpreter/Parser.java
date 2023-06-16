@@ -86,9 +86,13 @@ public class Parser {
 	}
 
 	private Remove remove(){
+		Remove res;
 		simbolo = lexer.prossimoSimbolo();
-		atteso(Simboli.OBJID);
-		return new Remove(Integer.valueOf(lexer.getString()));
+		if(simbolo == Simboli.POSFLOAT)
+			res = new Remove(Double.valueOf(lexer.getString()));
+		else
+			throw new SyntaxException("atteso id");
+		return res;
 	}
 
     /*private Combinazione combinazione() {

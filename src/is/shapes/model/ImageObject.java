@@ -21,7 +21,6 @@ public class ImageObject extends AbstractGraphicObject {
 	public ImageObject(ImageIcon img, Point2D pos) {
 		position = new Point2D.Double(pos.getX(), pos.getY());
 		image = img.getImage();
-		id = identificator();
 	}
 
 	@Override

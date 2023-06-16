@@ -15,7 +15,6 @@ public class CircleObject extends AbstractGraphicObject {
 			throw new IllegalArgumentException();
 		position = new Point2D.Double(pos.getX(), pos.getY());
 		radius = r;
-		id = identificator();
 	}
 
 	

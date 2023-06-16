@@ -24,5 +24,4 @@ public interface GraphicObject {
 
 	String getType();
 
-	int getID();
 }

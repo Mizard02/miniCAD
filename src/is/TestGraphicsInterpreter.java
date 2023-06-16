@@ -103,10 +103,9 @@ public class TestGraphicsInterpreter {
                     StringReader sr = new StringReader(combinazione);//Leggiamo una stringa come sequenza di caratteri
 
                     Parser p = new Parser(sr);
-                    System.out.println(p.getComando());
 
-                    Integer id = (Integer) p.getComando().interpreta(gpanel, handler);
-                    System.out.println("l'ID dell'oggetto creato è " + id);
+                    p.getComando().interpreta(gpanel, handler);
+                    //System.out.println("l'ID dell'oggetto creato è " + id);
                     break;
                 case 2:
                     continua = false;
@@ -115,3 +114,6 @@ public class TestGraphicsInterpreter {
         }
     }
 }
+//new circle (50.0) (100.0, 100.0)
+//new rectangle (100.0, 100.0) (200.0, 200.0)
+//new img ("C:\\Users\\mizar\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\mini CAD\\src\\is\\shapes\\model\\NyaNya.gif") (300.0, 300.0)

@@ -15,7 +15,6 @@ public class RectangleObject extends AbstractGraphicObject {
 		dim = new Dimension();
 		dim.setSize(w, h);
 		position = new Point2D.Double(pos.getX(), pos.getY());
-		id = identificator();
 	}
 
 	@Override

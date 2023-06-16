@@ -18,6 +18,7 @@ public class Create extends CMD implements Expression{
     private TypeConstr tp;
     private Pos p;
 
+
     public Create(TypeConstr tp, Pos p) {
         this.tp = tp;
         this.p = p;
@@ -26,9 +27,8 @@ public class Create extends CMD implements Expression{
     @Override
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
         AbstractGraphicObject go = (AbstractGraphicObject) tp.interpreta(panel, ch);
-        //go.moveTo(new Point2D.Double(p.getX(), p.getY()));
         ch.handle(new NewObjectCmd(panel, go));
         ch.handle(new MoveCommand(go, new Point2D.Double(p.getX(), p.getY())));
-        return go.getID();
+        return panel.getID(go);
     }
 }
