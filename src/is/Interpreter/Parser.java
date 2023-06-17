@@ -1,6 +1,7 @@
 package is.Interpreter;
 
 import java.io.Reader;
+import java.util.ArrayList;
 
 public class Parser {
 	private AnalizzatoreLessicale lexer;
@@ -18,11 +19,63 @@ public class Parser {
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == Simboli.NEW){
 			root = create();
-		} else if(simbolo == Simboli.DEL){
+		}
+		else if(simbolo == Simboli.DEL){
 			root = remove();
 		}
+		else if(simbolo == Simboli.GRP){
+			root = group();
+		}
+		else if(simbolo == Simboli.SCALE)
+			root = scale();
+		else if (simbolo == Simboli.UNGRP)
+			root = ungroup();
 		simbolo = lexer.prossimoSimbolo();
 		return root;
+	}
+
+	private Ungroup ungroup(){
+		simbolo = lexer.prossimoSimbolo();
+		Integer id = 0;
+		if(simbolo == Simboli.OBJID)
+			id = Integer.valueOf(lexer.getString());
+		return new Ungroup(id);
+	}
+
+	private Scale scale(){
+		Integer id;
+		Scale res = new Scale();
+
+		simbolo = lexer.prossimoSimbolo();
+		if(simbolo == Simboli.OBJID){
+			id = Integer.valueOf(lexer.getString());
+			simbolo = lexer.prossimoSimbolo();
+			if(simbolo == Simboli.POSFLOAT)
+				res = new Scale(id, Double.valueOf(lexer.getString()));
+		}
+		return res;
+	}
+
+	private Group group(){
+		return new Group(listId());
+	}
+
+	private ArrayList<Integer> listId(){
+		ArrayList<Integer> res = new ArrayList<>();
+
+		simbolo = lexer.prossimoSimbolo();
+		if(simbolo == Simboli.OBJID){
+			res.add(Integer.valueOf(lexer.getString()));
+			simbolo = lexer.prossimoSimbolo();
+			while(simbolo == Simboli.VIRGOLA) {
+				simbolo = lexer.prossimoSimbolo();
+				if (simbolo == Simboli.OBJID) {
+					res.add(Integer.valueOf(lexer.getString()));
+					simbolo = lexer.prossimoSimbolo();
+				}
+			}
+		}
+		return res;
 	}
 
 	private Create create(){
@@ -88,8 +141,8 @@ public class Parser {
 	private Remove remove(){
 		Remove res;
 		simbolo = lexer.prossimoSimbolo();
-		if(simbolo == Simboli.POSFLOAT)
-			res = new Remove(Double.valueOf(lexer.getString()));
+		if(simbolo == Simboli.OBJID)
+			res = new Remove(Integer.valueOf(lexer.getString()));
 		else
 			throw new SyntaxException("atteso id");
 		return res;

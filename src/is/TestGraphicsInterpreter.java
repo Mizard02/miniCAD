@@ -26,15 +26,12 @@ public class TestGraphicsInterpreter {
 
         JToolBar toolbar = new JToolBar();
         JButton undoButt = new JButton("Undo");
-        JButton redoButt = new JButton("Redo");
 
         final HistoryCommandHandler handler = new HistoryCommandHandler();
 
         undoButt.addActionListener(evt -> handler.handle(HistoryCommandHandler.NonExecutableCommands.UNDO));
-        redoButt.addActionListener(evt -> handler.handle(HistoryCommandHandler.NonExecutableCommands.REDO));
 
         toolbar.add(undoButt);
-        toolbar.add(redoButt);
 
         final GraphicObjectPanel gpanel = new GraphicObjectPanel();
         gpanel.setPreferredSize(new Dimension(400, 400)); //settiamo una dimensione del pannello

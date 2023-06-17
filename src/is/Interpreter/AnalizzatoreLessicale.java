@@ -17,23 +17,18 @@ public class AnalizzatoreLessicale {
 		input.eolIsSignificant(false);//ignoro i caratteri di fine riga non li considero come token separati
 		input.wordChars('a', 'z');
 		input.wordChars('A', 'Z');//Con questo metodo definiamo il range di caratteri che possono costituire i token
-		//input.wordChars('0', '9');
-		//input.wordChars('\u0000', '.');
+		input.wordChars('0', '9');
+		input.wordChars('\u0000', '.');
 		input.whitespaceChars('\u0000', ' ');//Con questo metodo definiamo un range di caratteri che verranno interpretati come spazio
 		input.ordinaryChar('(');
 		input.ordinaryChar(')');
 		input.ordinaryChar(',');
 		input.quoteChar('"');
-		input.parseNumbers();
+		//input.parseNumbers();
 	}
 
 	public String getString() {
-		String res = "";
-			if (simbolo == Simboli.POSFLOAT || simbolo == Simboli.OBJID)
-				res =  String.valueOf(input.nval);
-			else
-				res = input.toString();
-		return res;
+		return input.sval;
 	}
 
 	public Simboli prossimoSimbolo() {
@@ -54,8 +49,16 @@ public class AnalizzatoreLessicale {
 					simbolo = Simboli.RECTANGLE;
 				else if (input.sval.equalsIgnoreCase("img"))
 					simbolo = Simboli.IMG;
-				else if(input.sval.contains("."))
+				else if (input.sval.equalsIgnoreCase("grp"))
+					simbolo = Simboli.GRP;
+				else if (input.sval.equalsIgnoreCase("ungrp"))
+					simbolo = Simboli.UNGRP;
+				else if (input.sval.equalsIgnoreCase("scale"))
+					simbolo = Simboli.SCALE;
+				else if (input.sval.contains("."))
 					simbolo = Simboli.POSFLOAT;
+				else if (input.sval.matches("\\d"))
+					simbolo = Simboli.OBJID;
 				break;
 			case '"':
 				simbolo = Simboli.PATH;
@@ -69,12 +72,12 @@ public class AnalizzatoreLessicale {
 				case ',':
 					simbolo = Simboli.VIRGOLA;
 					break;
-				case StreamTokenizer.TT_NUMBER:
+				/*case StreamTokenizer.TT_NUMBER:
 					if(input.toString().contains("."))
-						simbolo = Simboli.POSFLOAT;
-					else
+					simbolo = Simboli.POSFLOAT;
+						else
 						simbolo = Simboli.OBJID;
-					break;
+					break;*/
 			default:
 				simbolo = Simboli.CHAR_INVALIDO;
 			}

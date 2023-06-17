@@ -11,10 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.swing.JComponent;
 
@@ -29,9 +26,9 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 	 * @directed true
 	 */
 
-	private Double id = 0.0;
-	private Map<Double, GraphicObject> objects = new HashMap<>();
-
+	private Integer id = 0;
+	private Map<Integer, GraphicObject> objects = new HashMap<>();
+	private Map<Integer, ArrayList<Integer>> groups = new HashMap<>();
 	private Map<Class<? extends GraphicObject>, GraphicObjectView> viewMap = new HashMap<>();
 
 	public GraphicObjectPanel() {
@@ -90,17 +87,21 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 		repaint();
 	}
 
-	public void remove(Double id) {
+	public void remove(Integer id) {
 		if (objects.containsKey(id)){
 			objects.remove(id).removeGraphicObjectListener(this);
-			repaint();
-		}
-		else
-			throw new SyntaxException("non esiste nessun oggetto con l'id fornito");
+		} else if (groups.containsKey(id)) {
+			ArrayList<Integer> l = groups.get(id);
+			for(Integer i: l)
+				objects.remove(i).removeGraphicObjectListener(this);
+			groups.remove(id);
+		} else
+			throw new SyntaxException("non esiste nessun oggetto/gruppo con l'id fornito");
+		repaint();
 	}
 
 	public double getID(GraphicObject go){
-		for (Map.Entry<Double, GraphicObject> entry : objects.entrySet()) {
+		for (Map.Entry<Integer, GraphicObject> entry : objects.entrySet()) {
 			if (entry.getValue().equals(go)) {
 				return entry.getKey();
 			}
@@ -116,8 +117,34 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 		}
 	}
 
-	public GraphicObject getObjectById(Double id){
+	public Class getClassById(Integer id){
+		Class c = Object.class;
+		if(objects.containsKey(id))
+			return GraphicObject.class;
+		else if (groups.containsKey(id))
+			return ArrayList.class;
+		return c;
+	}
+
+	public ArrayList<Integer> getGroup(Integer id){
+		return groups.get(id);
+	}
+
+	public void removeGroup(Integer id){
+		groups.remove(id);
+	}
+
+	public GraphicObject getObjectById(Integer id){
 		return objects.get(id);
+	}
+
+	public Integer createGroup(ArrayList<Integer> listId){
+		for(Integer id : listId)
+			if(!objects.containsKey(id))
+				throw new SyntaxException("non esiste nessun oggetto con l'id fornito");
+		id+=1;
+		groups.put(id, listId);
+		return id;
 	}
 
 	public void installView(Class<? extends GraphicObject> clazz, GraphicObjectView view) {

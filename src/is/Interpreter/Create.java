@@ -13,7 +13,7 @@ import is.shapes.view.GraphicObjectPanel;
 
 import java.awt.geom.Point2D;
 
-public class Create extends CMD implements Expression{
+public class Create extends CMD {
 
     private TypeConstr tp;
     private Pos p;

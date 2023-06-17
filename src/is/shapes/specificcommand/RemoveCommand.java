@@ -7,11 +7,11 @@ import is.shapes.view.GraphicObjectPanel;
 public class RemoveCommand implements Command {
 
     private GraphicObjectPanel panel;
-    private Double id;
+    private Integer id;
 
     private GraphicObject ripristina;
 
-    public RemoveCommand(GraphicObjectPanel panel, Double id) {
+    public RemoveCommand(GraphicObjectPanel panel, Integer id) {
         this.panel = panel;
         this.id = id;
     }

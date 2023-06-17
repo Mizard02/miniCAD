@@ -4,11 +4,11 @@ import is.command.CommandHandler;
 import is.shapes.specificcommand.RemoveCommand;
 import is.shapes.view.GraphicObjectPanel;
 
-public class Remove extends CMD implements Expression {
+public class Remove extends CMD {
 
-    double id;
+    Integer id;
 
-    public Remove(double id) {
+    public Remove(int id) {
         this.id = id;
     }
 
