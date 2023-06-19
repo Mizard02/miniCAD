@@ -24,4 +24,8 @@ public interface GraphicObject {
 
 	String getType();
 
+	double getArea();
+
+	double getPerimeter();
+
 }

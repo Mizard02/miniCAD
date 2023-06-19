@@ -79,4 +79,24 @@ public class ImageObject extends AbstractGraphicObject {
 		return "Image";
 	}
 
+	@Override
+	public double getArea() {
+		Dimension2D dim = getDimension();
+		return dim.getHeight() * dim.getWidth();
+	}
+
+	@Override
+	public double getPerimeter() {
+		Dimension2D dim = getDimension();
+		return (dim.getHeight()*2) + (dim.getWidth()*2);
+	}
+
+	@Override
+	public String toString() {
+		return "ImageObject{" +
+				"factor=" + factor +
+				", image=" + image +
+				", position=" + position +
+				'}';
+	}
 }

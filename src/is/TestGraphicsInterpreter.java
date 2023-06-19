@@ -92,10 +92,9 @@ public class TestGraphicsInterpreter {
             int scelta = sc.nextInt();
             switch(scelta){
                 case 1:
-                    System.out.print("Fornisci la combinazione: \n");
+                    System.out.print("Fornisci il comando: \n");
                     sc.nextLine();
                     String combinazione = sc.nextLine();
-                    //sc.close();
 
                     StringReader sr = new StringReader(combinazione);//Leggiamo una stringa come sequenza di caratteri
 
@@ -114,3 +113,4 @@ public class TestGraphicsInterpreter {
 //new circle (50.0) (100.0, 100.0)
 //new rectangle (100.0, 100.0) (200.0, 200.0)
 //new img ("C:\\Users\\mizar\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\mini CAD\\src\\is\\shapes\\model\\NyaNya.gif") (300.0, 300.0)
+//mv 1 (2.0, 4.0)

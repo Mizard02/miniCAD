@@ -67,4 +67,22 @@ public class RectangleObject extends AbstractGraphicObject {
 
 		return "Rectangle";
 	}
+
+	@Override
+	public double getArea() {
+		return dim.getHeight() * dim.getWidth();
+	}
+
+	@Override
+	public double getPerimeter() {
+		return (dim.getHeight()*2) + (dim.getWidth()*2);
+	}
+
+	@Override
+	public String toString() {
+		return "RectangleObject{" +
+				"position=" + position +
+				", dim=" + dim +
+				'}';
+	}
 }

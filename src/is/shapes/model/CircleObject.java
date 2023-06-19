@@ -3,6 +3,7 @@ package is.shapes.model;
 import java.awt.Dimension;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import  java.lang.Math;
 
 public class CircleObject extends AbstractGraphicObject {
 
@@ -66,7 +67,25 @@ public class CircleObject extends AbstractGraphicObject {
 		return "Circle";
 	}
 
+	@Override
+	public double getArea() {
+		return Math.pow(radius, 2) * Math.PI;
+	}
+
+	@Override
+	public double getPerimeter() {
+		return 2 * Math.PI * radius;
+	}
+
 	public double getRadius() {
 		return radius;
+	}
+
+	@Override
+	public String toString() {
+		return "CircleObject{" +
+				"position=" + position +
+				", radius=" + radius +
+				'}';
 	}
 }

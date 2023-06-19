@@ -5,39 +5,72 @@ import java.util.ArrayList;
 
 public class Parser {
 	private AnalizzatoreLessicale lexer;
-	private Simboli simbolo;
+	private TerminalExpression simbolo;
 	private CMD root;
 
 	//Costruttore
 	public Parser(Reader in) {
 		lexer = new AnalizzatoreLessicale(in); //analizza solo la combinazione fornita
 		root = CMD();
-		atteso(Simboli.EOF);
+		atteso(TerminalExpression.EOF);
 	}
 
 	private CMD CMD(){
 		simbolo = lexer.prossimoSimbolo();
-		if(simbolo == Simboli.NEW){
+		if(simbolo == TerminalExpression.NEW)
 			root = create();
-		}
-		else if(simbolo == Simboli.DEL){
+		else if(simbolo == TerminalExpression.DEL)
 			root = remove();
-		}
-		else if(simbolo == Simboli.GRP){
+		else if(simbolo == TerminalExpression.GRP)
 			root = group();
-		}
-		else if(simbolo == Simboli.SCALE)
+		else if(simbolo == TerminalExpression.SCALE)
 			root = scale();
-		else if (simbolo == Simboli.UNGRP)
+		else if (simbolo == TerminalExpression.UNGRP)
 			root = ungroup();
+		else if ( simbolo == TerminalExpression.MVOFF)
+			root = mvoff();
+		else if (simbolo == TerminalExpression.MV)
+			root = mv();
+		else if (simbolo == TerminalExpression.LS)
+			root = mv();
 		simbolo = lexer.prossimoSimbolo();
 		return root;
+	}
+
+	private MV mv(){
+		Integer id = 0;
+		Pos p = new Pos(0, 0);
+
+		simbolo = lexer.prossimoSimbolo();
+		if(simbolo == TerminalExpression.OBJID){
+			id = Integer.valueOf(lexer.getString());
+			simbolo = lexer.prossimoSimbolo();
+			p = pos();
+		}else
+			throw new SyntaxException("inserire L'id esempio -> 1");
+
+		return new MV(id, p);
+	}
+
+	private MVOFF mvoff(){
+		Integer id = 0;
+		Pos p = new Pos(0, 0);
+
+		simbolo = lexer.prossimoSimbolo();
+		if(simbolo == TerminalExpression.OBJID){
+			id = Integer.valueOf(lexer.getString());
+			simbolo = lexer.prossimoSimbolo();
+			p = pos();
+		}else
+			throw new SyntaxException("inserire L'id esempio -> 1");
+
+		return new MVOFF(id, p);
 	}
 
 	private Ungroup ungroup(){
 		simbolo = lexer.prossimoSimbolo();
 		Integer id = 0;
-		if(simbolo == Simboli.OBJID)
+		if(simbolo == TerminalExpression.OBJID)
 			id = Integer.valueOf(lexer.getString());
 		return new Ungroup(id);
 	}
@@ -47,10 +80,10 @@ public class Parser {
 		Scale res = new Scale();
 
 		simbolo = lexer.prossimoSimbolo();
-		if(simbolo == Simboli.OBJID){
+		if(simbolo == TerminalExpression.OBJID){
 			id = Integer.valueOf(lexer.getString());
 			simbolo = lexer.prossimoSimbolo();
-			if(simbolo == Simboli.POSFLOAT)
+			if(simbolo == TerminalExpression.POSFLOAT)
 				res = new Scale(id, Double.valueOf(lexer.getString()));
 		}
 		return res;
@@ -64,12 +97,12 @@ public class Parser {
 		ArrayList<Integer> res = new ArrayList<>();
 
 		simbolo = lexer.prossimoSimbolo();
-		if(simbolo == Simboli.OBJID){
+		if(simbolo == TerminalExpression.OBJID){
 			res.add(Integer.valueOf(lexer.getString()));
 			simbolo = lexer.prossimoSimbolo();
-			while(simbolo == Simboli.VIRGOLA) {
+			while(simbolo == TerminalExpression.VIRGOLA) {
 				simbolo = lexer.prossimoSimbolo();
-				if (simbolo == Simboli.OBJID) {
+				if (simbolo == TerminalExpression.OBJID) {
 					res.add(Integer.valueOf(lexer.getString()));
 					simbolo = lexer.prossimoSimbolo();
 				}
@@ -89,27 +122,27 @@ public class Parser {
 		simbolo = lexer.prossimoSimbolo();
 		TypeConstr res;
 		Pos p;
-		if (simbolo == Simboli.CIRCLE){
+		if (simbolo == TerminalExpression.CIRCLE){
 			simbolo = lexer.prossimoSimbolo();
-			atteso(Simboli.TONDA_APERTA);
-			if(simbolo == Simboli.POSFLOAT) {
+			atteso(TerminalExpression.TONDA_APERTA);
+			if(simbolo == TerminalExpression.POSFLOAT) {
 				res = new CircleTC(Double.valueOf(lexer.getString()));
 				simbolo = lexer.prossimoSimbolo();
 			}
 			else
 				throw new SyntaxException("atteso POSFLOAT -> float.float ");
-			atteso(Simboli.TONDA_CHIUSA);
-		} else if(simbolo == Simboli.IMG) {
+			atteso(TerminalExpression.TONDA_CHIUSA);
+		} else if(simbolo == TerminalExpression.IMG) {
 			simbolo = lexer.prossimoSimbolo();
-			atteso(Simboli.TONDA_APERTA);
-			if (simbolo == Simboli.PATH){
+			atteso(TerminalExpression.TONDA_APERTA);
+			if (simbolo == TerminalExpression.PATH){
 				res = new ImgTC(lexer.getString());
 				simbolo = lexer.prossimoSimbolo();
 			}
 			else
 				throw new SyntaxException("atteso PATH -> \"C\\cartella1\\file.txt\""); // carattere di escape -> \
-			atteso(Simboli.TONDA_CHIUSA);
-		} else if(simbolo == Simboli.RECTANGLE){
+			atteso(TerminalExpression.TONDA_CHIUSA);
+		} else if(simbolo == TerminalExpression.RECTANGLE){
 			simbolo = lexer.prossimoSimbolo();
 			p = pos();
 			res = new RectangleTC(p);
@@ -120,15 +153,15 @@ public class Parser {
 
 	private Pos pos(){
 		double w, h;
-		atteso(Simboli.TONDA_APERTA);
-		if(simbolo == Simboli.POSFLOAT) {
+		atteso(TerminalExpression.TONDA_APERTA);
+		if(simbolo == TerminalExpression.POSFLOAT) {
 			w = Double.valueOf(lexer.getString());
 			simbolo = lexer.prossimoSimbolo();
-			atteso(Simboli.VIRGOLA);
-			if (simbolo == Simboli.POSFLOAT){
+			atteso(TerminalExpression.VIRGOLA);
+			if (simbolo == TerminalExpression.POSFLOAT){
 				h = Double.valueOf(lexer.getString());
 				simbolo = lexer.prossimoSimbolo();
-				atteso(Simboli.TONDA_CHIUSA);
+				atteso(TerminalExpression.TONDA_CHIUSA);
 			}
 			else
 				throw new SyntaxException("atteso POSFLOAT -> float.float ");
@@ -141,78 +174,14 @@ public class Parser {
 	private Remove remove(){
 		Remove res;
 		simbolo = lexer.prossimoSimbolo();
-		if(simbolo == Simboli.OBJID)
+		if(simbolo == TerminalExpression.OBJID)
 			res = new Remove(Integer.valueOf(lexer.getString()));
 		else
 			throw new SyntaxException("atteso id");
 		return res;
 	}
 
-    /*private Combinazione combinazione() {
-
-		ParteOr pOr = parteOr();
-		Combinazione comb = new Combinazione(pOr);
-
-		while (simbolo == Simboli.OR) {
-			comb.addParteOr(parteOr());
-		}
-		return comb;
-	}// combinazione
-
-
-	private ParteOr parteOr() {
-		ParteAnd pAnd = parteAnd();
-		ParteOr pOr = new ParteOr(pAnd);
-
-		while (simbolo == Simboli.AND) {
-			pOr.addParteAnd(parteAnd());
-		}
-		return pOr;
-	}// parteOr
-
-	private ParteAnd parteAnd() {
-		ParteNear left = parteNear();
-		ParteNear right = null;
-		if (simbolo == Simboli.NEAR)
-			right = parteNear();
-		return new ParteAnd(left, right);
-
-	}// parteAnd
-
-	private ParteNear parteNear() {
-		simbolo = lexer.prossimoSimbolo();
-		if (simbolo == Simboli.NOT) {
-
-			simbolo = lexer.prossimoSimbolo();
-			Elemento el = elemento();
-			return new ParteNearElemento(true, el);
-		}
-		if (simbolo == Simboli.TONDA_APERTA) {
-			Combinazione cb = combinazione();
-			atteso(Simboli.TONDA_CHIUSA);
-			return new ParteNearCombinazione(cb);
-		}
-		return new ParteNearElemento(false, elemento());
-
-	}// parteNear
-
-	private Elemento elemento() {
-		Elemento res = null;
-		if (simbolo == Simboli.STRINGA_QUOTATA) {
-			res = new Elemento(lexer.getString(), true);
-
-			simbolo = lexer.prossimoSimbolo();
-		} else if (simbolo == Simboli.PAROLA) {
-			res = new Elemento(lexer.getString(), false);
-
-			simbolo = lexer.prossimoSimbolo();
-		} else
-			throw new SyntaxException(
-					"Attesa STRINGA_QUOTATA o PAROLA in elemento()");
-		return res;
-	}// elemento*/
-
-	private void atteso(Simboli s) {
+	private void atteso(TerminalExpression s) {
 		if (simbolo != s) {
 			String msg = " trovato " + simbolo + " mentre si attendeva " + s;
 			throw new SyntaxException(msg);

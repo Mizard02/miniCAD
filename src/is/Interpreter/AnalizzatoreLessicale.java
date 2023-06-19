@@ -7,7 +7,7 @@ import java.io.StreamTokenizer;
 public class AnalizzatoreLessicale {
 
 	private StreamTokenizer input;
-	private Simboli simbolo;
+	private TerminalExpression simbolo;
 
 	//in questo costruttore creiamo e personalizziamo lo StreamTokenizer
 	//per adattarlo all'uso di cui abbiamo bisogno
@@ -31,46 +31,60 @@ public class AnalizzatoreLessicale {
 		return input.sval;
 	}
 
-	public Simboli prossimoSimbolo() {
+	public TerminalExpression prossimoSimbolo() {
 		try {
 			switch (input.nextToken()){
 			case StreamTokenizer.TT_EOF:
-				simbolo = Simboli.EOF;
+				simbolo = TerminalExpression.EOF;
 				break;
 			case StreamTokenizer.TT_WORD:
 				// verifica prima se la parola e' riservata
 				if (input.sval.equalsIgnoreCase("new"))
-					simbolo = Simboli.NEW;
+					simbolo = TerminalExpression.NEW;
 				else if (input.sval.equalsIgnoreCase("del"))
-					simbolo = Simboli.DEL;
+					simbolo = TerminalExpression.DEL;
 				else if (input.sval.equalsIgnoreCase("circle"))
-					simbolo = Simboli.CIRCLE;
+					simbolo = TerminalExpression.CIRCLE;
 				else if (input.sval.equalsIgnoreCase("rectangle"))
-					simbolo = Simboli.RECTANGLE;
+					simbolo = TerminalExpression.RECTANGLE;
 				else if (input.sval.equalsIgnoreCase("img"))
-					simbolo = Simboli.IMG;
+					simbolo = TerminalExpression.IMG;
 				else if (input.sval.equalsIgnoreCase("grp"))
-					simbolo = Simboli.GRP;
+					simbolo = TerminalExpression.GRP;
 				else if (input.sval.equalsIgnoreCase("ungrp"))
-					simbolo = Simboli.UNGRP;
+					simbolo = TerminalExpression.UNGRP;
 				else if (input.sval.equalsIgnoreCase("scale"))
-					simbolo = Simboli.SCALE;
+					simbolo = TerminalExpression.SCALE;
+				else if (input.sval.equalsIgnoreCase("mv"))
+					simbolo = TerminalExpression.MV;
+				else if (input.sval.equalsIgnoreCase("mvoff"))
+					simbolo = TerminalExpression.MVOFF;
+				else if (input.sval.equalsIgnoreCase("ls"))
+					simbolo = TerminalExpression.LS;
+				else if (input.sval.equalsIgnoreCase("all"))
+					simbolo = TerminalExpression.ALL;
+				else if (input.sval.equalsIgnoreCase("groups"))
+					simbolo = TerminalExpression.GROUPS;
+				else if (input.sval.equalsIgnoreCase("area"))
+					simbolo = TerminalExpression.AREA;
+				else if (input.sval.equalsIgnoreCase("perimeter"))
+					simbolo = TerminalExpression.PERIMETER;
 				else if (input.sval.contains("."))
-					simbolo = Simboli.POSFLOAT;
+					simbolo = TerminalExpression.POSFLOAT;
 				else if (input.sval.matches("\\d"))
-					simbolo = Simboli.OBJID;
+					simbolo = TerminalExpression.OBJID;
 				break;
 			case '"':
-				simbolo = Simboli.PATH;
+				simbolo = TerminalExpression.PATH;
 				break;
 			case '(':
-				simbolo = Simboli.TONDA_APERTA;
+				simbolo = TerminalExpression.TONDA_APERTA;
 				break;
 			case ')':
-				simbolo = Simboli.TONDA_CHIUSA;
+				simbolo = TerminalExpression.TONDA_CHIUSA;
 				break;
 				case ',':
-					simbolo = Simboli.VIRGOLA;
+					simbolo = TerminalExpression.VIRGOLA;
 					break;
 				/*case StreamTokenizer.TT_NUMBER:
 					if(input.toString().contains("."))
@@ -79,10 +93,10 @@ public class AnalizzatoreLessicale {
 						simbolo = Simboli.OBJID;
 					break;*/
 			default:
-				simbolo = Simboli.CHAR_INVALIDO;
+				simbolo = TerminalExpression.CHAR_INVALIDO;
 			}
 		} catch (IOException e) {
-			simbolo = Simboli.EOF;
+			simbolo = TerminalExpression.EOF;
 		}
 		return simbolo;
 	}// prossimoSimbolo
