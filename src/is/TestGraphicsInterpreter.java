@@ -54,7 +54,7 @@ public class TestGraphicsInterpreter {
         toolbar.add(circButton);
 
         //e infine l'immagine
-        go = new ImageObject(new ImageIcon("C:\\Users\\mizar\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\codice sorgente esempi\\ObserverCommandFlyweigth\\src\\is\\shapes\\model\\NyaNya.gif"), new Point(240, 187));
+        go = new ImageObject(new ImageIcon("C:\\Users\\Giuseppe\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\mini CAD\\src\\is\\shapes\\model\\NyaNya.gif"), new Point(240, 187));
         JButton imgButton = new JButton(new CreateObjectAction(go, gpanel, handler));
         imgButton.setText(go.getType());
         toolbar.add(imgButton);
@@ -112,5 +112,5 @@ public class TestGraphicsInterpreter {
 }
 //new circle (50.0) (100.0, 100.0)
 //new rectangle (100.0, 100.0) (200.0, 200.0)
-//new img ("C:\\Users\\mizar\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\mini CAD\\src\\is\\shapes\\model\\NyaNya.gif") (300.0, 300.0)
+//new img ("C:\\Users\\Giuseppe\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\mini CAD\\src\\is\\shapes\\model\\NyaNya.gif") (300.0, 300.0)
 //mv 1 (2.0, 4.0)

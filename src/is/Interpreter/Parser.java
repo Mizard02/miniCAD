@@ -32,14 +32,59 @@ public class Parser {
 		else if (simbolo == TerminalExpression.MV)
 			root = mv();
 		else if (simbolo == TerminalExpression.LS)
-			root = mv();
+			root = ls();
+		else if (simbolo == TerminalExpression.AREA)
+			root = area();
+		else if (simbolo == TerminalExpression.PERIMETER)
+			root = perimeter();
 		simbolo = lexer.prossimoSimbolo();
 		return root;
 	}
 
+	private Area area(){
+		simbolo = lexer.prossimoSimbolo();
+		Area res;
+		if(simbolo == TerminalExpression.OBJID)
+			res = new AreaID(Integer.valueOf(lexer.getString()));
+		else if(simbolo == TerminalExpression.RECTANGLE || simbolo == TerminalExpression.CIRCLE || simbolo == TerminalExpression.IMG)
+			res = new AreaType(lexer.getString());
+		else if(simbolo == TerminalExpression.ALL)
+			res = new AreaAll();
+		else throw new SyntaxException("inserire OBJID or TYPE or All");
+		return res;
+	}
+
+	private Perimeter perimeter(){
+		simbolo = lexer.prossimoSimbolo();
+		Perimeter res;
+		if(simbolo == TerminalExpression.OBJID)
+			res = new PerimeterID(Integer.valueOf(lexer.getString()));
+		else if(simbolo == TerminalExpression.RECTANGLE || simbolo == TerminalExpression.CIRCLE || simbolo == TerminalExpression.IMG)
+			res = new PerimeterType(lexer.getString());
+		else if(simbolo == TerminalExpression.ALL)
+			res = new PerimeterAll();
+		else throw new SyntaxException("inserire OBJID or TYPE or All");
+		return res;
+	}
+
+	private List ls(){
+		simbolo = lexer.prossimoSimbolo();
+		List res;
+		if(simbolo == TerminalExpression.OBJID)
+			res = new ListID(Integer.valueOf(lexer.getString()));
+		else if(simbolo == TerminalExpression.RECTANGLE || simbolo == TerminalExpression.CIRCLE || simbolo == TerminalExpression.IMG)
+			res = new ListType(lexer.getString());
+		else if(simbolo == TerminalExpression.ALL)
+			res = new ListAll();
+		else if (simbolo == TerminalExpression.GROUPS)
+			res = new ListaGroups();
+		else throw new SyntaxException("inserire OBJID or TYPE or All or GROUPS");
+		return res;
+	}
+
 	private MV mv(){
-		Integer id = 0;
-		Pos p = new Pos(0, 0);
+		Integer id;
+		Pos p;
 
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == TerminalExpression.OBJID){
@@ -53,8 +98,8 @@ public class Parser {
 	}
 
 	private MVOFF mvoff(){
-		Integer id = 0;
-		Pos p = new Pos(0, 0);
+		Integer id;
+		Pos p;
 
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == TerminalExpression.OBJID){
@@ -128,8 +173,7 @@ public class Parser {
 			if(simbolo == TerminalExpression.POSFLOAT) {
 				res = new CircleTC(Double.valueOf(lexer.getString()));
 				simbolo = lexer.prossimoSimbolo();
-			}
-			else
+			} else
 				throw new SyntaxException("atteso POSFLOAT -> float.float ");
 			atteso(TerminalExpression.TONDA_CHIUSA);
 		} else if(simbolo == TerminalExpression.IMG) {
@@ -138,8 +182,7 @@ public class Parser {
 			if (simbolo == TerminalExpression.PATH){
 				res = new ImgTC(lexer.getString());
 				simbolo = lexer.prossimoSimbolo();
-			}
-			else
+			} else
 				throw new SyntaxException("atteso PATH -> \"C\\cartella1\\file.txt\""); // carattere di escape -> \
 			atteso(TerminalExpression.TONDA_CHIUSA);
 		} else if(simbolo == TerminalExpression.RECTANGLE){
@@ -162,11 +205,9 @@ public class Parser {
 				h = Double.valueOf(lexer.getString());
 				simbolo = lexer.prossimoSimbolo();
 				atteso(TerminalExpression.TONDA_CHIUSA);
-			}
-			else
+			} else
 				throw new SyntaxException("atteso POSFLOAT -> float.float ");
-		}
-		else
+		} else
 			throw new SyntaxException("atteso POSFLOAT -> float.float ");
 		return new Pos(w, h);
 	}

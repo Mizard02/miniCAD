@@ -6,22 +6,24 @@ import is.shapes.view.GraphicObjectPanel;
 
 import java.util.ArrayList;
 
-public abstract class List extends CMD {
+public abstract class Area extends CMD{
 
     protected GraphicObjectPanel panel;
 
     abstract protected ArrayList<GraphicObject> getGraphicObjects();
 
-    final protected void Stampa (){
+    final protected void Calcola (){
         ArrayList<GraphicObject> goList = getGraphicObjects();
+        double res = 0.0;
         for(GraphicObject go : goList){
-            System.out.println(go + "\n");
+            res += go.getArea();
         }
+        System.out.println("L'area è : " + res);
     }
 
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
         this.panel = panel;
-        Stampa();
+        Calcola();
         return null;
     }
 }

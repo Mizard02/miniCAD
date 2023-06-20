@@ -138,6 +138,12 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 		return objects.get(id);
 	}
 
+	public Collection<GraphicObject> getAllObjects(){return objects.values();}
+
+	public Collection<ArrayList<Integer>> getAllGroups(){return groups.values();}
+
+	public Set<Integer> getAllIdGroups(){return groups.keySet();}
+
 	public Integer createGroup(ArrayList<Integer> listId){
 		for(Integer id : listId)
 			if(!objects.containsKey(id))
