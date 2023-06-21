@@ -13,14 +13,6 @@ public class PerimeterType extends Perimeter{
 
     @Override
     protected ArrayList<GraphicObject> getGraphicObjects() {
-        ArrayList<GraphicObject> list = new ArrayList<>(panel.getAllObjects());
-        ArrayList<GraphicObject> res = new ArrayList<>();
-
-        for(GraphicObject go : list){
-            if(go.getType().equalsIgnoreCase(Type))
-                res.add(go);
-        }
-
-        return res;
+        return util.implForType(Type);
     }
 }

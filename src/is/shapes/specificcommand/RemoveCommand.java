@@ -26,6 +26,7 @@ public class RemoveCommand implements Command {
     @Override
     public boolean undoIt() {
         panel.add(ripristina);
+        System.out.println("l'oggetto è stato ripristinato con il nuovo ID: " + ripristina.getId());
         return false;
     }
 }

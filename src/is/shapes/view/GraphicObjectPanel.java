@@ -82,6 +82,7 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 
 	public void add(GraphicObject go) {
 		id+=1;
+		go.setId(id);
 		objects.put(id, go);
 		go.addGraphicObjectListener(this);
 		repaint();
@@ -110,11 +111,7 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 	}
 
 	public void remove(GraphicObject go) {
-		LinkedList<GraphicObject> list = (LinkedList<GraphicObject>) objects.values();
-		if (list.remove(go)) {
-			repaint();
-			go.removeGraphicObjectListener(this);
-		}
+		remove(go.getId());
 	}
 
 	public Class getClassById(Integer id){

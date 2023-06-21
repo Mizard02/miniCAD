@@ -1,5 +1,6 @@
 package is.Interpreter;
 
+import is.Interpreter.Bridge.UtilsImpl;
 import is.command.CommandHandler;
 import is.shapes.model.GraphicObject;
 import is.shapes.view.GraphicObjectPanel;
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 
 public abstract class Perimeter extends CMD{
     protected GraphicObjectPanel panel;
+
+    protected UtilsImpl util;
 
     abstract protected ArrayList<GraphicObject> getGraphicObjects();
 
@@ -21,7 +24,7 @@ public abstract class Perimeter extends CMD{
     }
 
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
-        this.panel = panel;
+        util = new UtilsImpl(panel);
         Calcola();
         return null;
     }

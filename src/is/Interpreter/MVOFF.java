@@ -23,12 +23,16 @@ public class MVOFF extends Move{
             for(Integer i : list){
                 go = panel.getObjectById(i);
                 p1 = go.getPosition();
-                ch.handle(new MoveCommand(go, new Point2D.Double(pos.getX() + p1.getX(), pos.getY() + p1.getY())));
+                double x = pos.getX() + p1.getX();
+                double y = pos.getY() + p1.getY();
+                ch.handle(new MoveCommand(go, new Point2D.Double(x, y)));
             }
         }else {
             go = panel.getObjectById(id);
             p1 = go.getPosition();
-            ch.handle(new MoveCommand(go, new Point2D.Double(pos.getX() + p1.getX(), pos.getY() + p1.getY())));
+            double x = pos.getX() + p1.getX();
+            double y = pos.getY() + p1.getY();
+            ch.handle(new MoveCommand(go, new Point2D.Double(x, y)));
         }
         return null;
     }

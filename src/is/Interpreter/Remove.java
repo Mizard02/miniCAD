@@ -12,16 +12,6 @@ public class Remove extends CMD {
         this.id = id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "del " + id;
-    }
-
-
     @Override
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
         ch.handle(new RemoveCommand(panel, id));

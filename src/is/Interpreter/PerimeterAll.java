@@ -7,6 +7,6 @@ import java.util.ArrayList;
 public class PerimeterAll extends Perimeter{
     @Override
     protected ArrayList<GraphicObject> getGraphicObjects() {
-        return new ArrayList<>(panel.getAllObjects());
+        return util.implForAll();
     }
 }

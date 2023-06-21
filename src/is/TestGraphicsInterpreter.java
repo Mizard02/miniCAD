@@ -101,7 +101,6 @@ public class TestGraphicsInterpreter {
                     Parser p = new Parser(sr);
 
                     p.getComando().interpreta(gpanel, handler);
-                    //System.out.println("l'ID dell'oggetto creato è " + id);
                     break;
                 case 2:
                     continua = false;

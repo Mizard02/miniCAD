@@ -14,6 +14,8 @@ public class Group extends CMD {
     }
     @Override
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
-        return panel.createGroup(ListID);
+
+        System.out.println("l'ID del gruppo creato è " + panel.createGroup(ListID));
+        return null;
     }
 }

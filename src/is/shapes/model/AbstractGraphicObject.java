@@ -9,6 +9,16 @@ public abstract class AbstractGraphicObject implements GraphicObject, Cloneable 
 
 	private List<GraphicObjectListener> listeners = new LinkedList<>();
 
+	protected Integer id;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Override
 	public void addGraphicObjectListener(GraphicObjectListener l) {
 		if (listeners.contains(l))

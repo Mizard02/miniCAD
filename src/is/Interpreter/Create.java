@@ -6,6 +6,7 @@ import is.shapes.model.AbstractGraphicObject;
 import is.shapes.model.CircleObject;
 import is.shapes.model.GraphicObject;
 import is.shapes.model.GraphicObjectListener;
+import is.shapes.specificcommand.MacroCommand;
 import is.shapes.specificcommand.MoveCommand;
 import is.shapes.specificcommand.NewObjectCmd;
 import is.shapes.view.CreateObjectAction;
@@ -27,8 +28,9 @@ public class Create extends CMD {
     @Override
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
         AbstractGraphicObject go = (AbstractGraphicObject) tp.interpreta(panel, ch);
-        ch.handle(new NewObjectCmd(panel, go));
-        ch.handle(new MoveCommand(go, new Point2D.Double(p.getX(), p.getY())));
-        return panel.getID(go);
+        MacroCommand mc = new MacroCommand(new NewObjectCmd(panel, go), new MoveCommand(go, new Point2D.Double(p.getX(), p.getY())));
+        ch.handle(mc);
+        System.out.println("l'ID dell'oggetto creato è " + panel.getID(go));
+        return null;
     }
 }

@@ -13,19 +13,6 @@ public class AreaID extends Area{
 
     @Override
     protected ArrayList<GraphicObject> getGraphicObjects() {
-        Class c = panel.getClassById(id);
-        ArrayList<GraphicObject> res = new ArrayList<GraphicObject>();
-        GraphicObject go;
-        if(c == ArrayList.class){
-            ArrayList<Integer> list = panel.getGroup(id);
-            for(Integer i : list){
-                go = panel.getObjectById(i);
-                res.add(go);
-            }
-        }else {
-            go = panel.getObjectById(id);
-            res.add(go);
-        }
-        return res;
+        return util.implForID(id);
     }
 }

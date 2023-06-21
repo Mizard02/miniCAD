@@ -7,6 +7,6 @@ import java.util.ArrayList;
 public class AreaAll extends Area{
     @Override
     protected ArrayList<GraphicObject> getGraphicObjects() {
-        return new ArrayList<>(panel.getAllObjects());
+        return util.implForAll();
     }
 }

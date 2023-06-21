@@ -9,28 +9,19 @@ public class Pos implements Expression
     private double Y;
 
     public Pos(double x, double y) {
-        //if ( x > 0.0 && y > 0.0) {
+        if ( x > 0.0 && y > 0.0) {
             X = x;
             Y = y;
-        /*}
-        else
-            throw new SyntaxException("Numeri inseriti negativi, inserire numeri positivi");*/
+        }
+        else throw new SyntaxException("Numeri inseriti negativi, inserire numeri positivi");
     }
 
     public double getX() {
         return X;
     }
 
-    public void setX(double x) {
-        X = x;
-    }
-
     public double getY() {
         return Y;
-    }
-
-    public void setY(double y) {
-        Y = y;
     }
 
     @Override

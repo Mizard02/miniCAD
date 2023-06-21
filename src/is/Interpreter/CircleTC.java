@@ -18,14 +18,6 @@ public class CircleTC extends TypeConstr{
         this.raggio = raggio;
     }
 
-    public double getRaggio() {
-        return raggio;
-    }
-
-    public void setRaggio(double raggio) {
-        this.raggio = raggio;
-    }
-
     @Override
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
         return new CircleObject(new Point2D.Double(), raggio);

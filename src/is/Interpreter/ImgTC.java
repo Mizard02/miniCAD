@@ -17,15 +17,6 @@ public class ImgTC extends TypeConstr{
         this.path = path;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-
     @Override
     public Object interpreta(GraphicObjectPanel panel, CommandHandler ch) {
         return  new ImageObject(new ImageIcon(path), new Point());

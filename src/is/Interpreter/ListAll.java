@@ -10,6 +10,6 @@ public class ListAll extends List{
 
     @Override
     protected ArrayList<GraphicObject> getGraphicObjects() {
-        return new ArrayList<>(panel.getAllObjects());
+        return util.implForAll();
     }
 }

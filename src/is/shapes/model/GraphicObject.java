@@ -28,4 +28,8 @@ public interface GraphicObject {
 
 	double getPerimeter();
 
+	void setId(Integer id);
+
+	Integer getId();
+
 }
