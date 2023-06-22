@@ -86,12 +86,6 @@ public class AnalizzatoreLessicale {
 				case ',':
 					simbolo = TerminalExpression.VIRGOLA;
 					break;
-				/*case StreamTokenizer.TT_NUMBER:
-					if(input.toString().contains("."))
-					simbolo = Simboli.POSFLOAT;
-						else
-						simbolo = Simboli.OBJID;
-					break;*/
 			default:
 				simbolo = TerminalExpression.CHAR_INVALIDO;
 			}
