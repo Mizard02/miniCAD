@@ -71,7 +71,7 @@ public class AnalizzatoreLessicale {
 					simbolo = TerminalExpression.PERIMETER;
 				else if (input.sval.contains("."))
 					simbolo = TerminalExpression.POSFLOAT;
-				else if (input.sval.matches("\\d"))
+				else if (input.sval.matches("^\\d+$"))
 					simbolo = TerminalExpression.OBJID;
 				break;
 			case '"':

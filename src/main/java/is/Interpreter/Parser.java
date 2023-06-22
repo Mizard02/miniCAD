@@ -45,7 +45,10 @@ public class Parser {
 		simbolo = lexer.prossimoSimbolo();
 		Area res;
 		if(simbolo == TerminalExpression.OBJID)
-			res = new AreaID(Integer.valueOf(lexer.getString()));
+			if(lexer.getString().length() < 9)
+				res = new AreaID(Integer.valueOf(lexer.getString()));
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 		else if(simbolo == TerminalExpression.RECTANGLE || simbolo == TerminalExpression.CIRCLE || simbolo == TerminalExpression.IMG)
 			res = new AreaType(lexer.getString());
 		else if(simbolo == TerminalExpression.ALL)
@@ -58,7 +61,10 @@ public class Parser {
 		simbolo = lexer.prossimoSimbolo();
 		Perimeter res;
 		if(simbolo == TerminalExpression.OBJID)
-			res = new PerimeterID(Integer.valueOf(lexer.getString()));
+			if(lexer.getString().length() < 9)
+				res = new PerimeterID(Integer.valueOf(lexer.getString()));
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 		else if(simbolo == TerminalExpression.RECTANGLE || simbolo == TerminalExpression.CIRCLE || simbolo == TerminalExpression.IMG)
 			res = new PerimeterType(lexer.getString());
 		else if(simbolo == TerminalExpression.ALL)
@@ -71,7 +77,10 @@ public class Parser {
 		simbolo = lexer.prossimoSimbolo();
 		List res;
 		if(simbolo == TerminalExpression.OBJID)
-			res = new ListID(Integer.valueOf(lexer.getString()));
+			if(lexer.getString().length() < 9)
+				res = new ListID(Integer.valueOf(lexer.getString()));
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 		else if(simbolo == TerminalExpression.RECTANGLE || simbolo == TerminalExpression.CIRCLE || simbolo == TerminalExpression.IMG)
 			res = new ListType(lexer.getString());
 		else if(simbolo == TerminalExpression.ALL)
@@ -88,9 +97,13 @@ public class Parser {
 
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == TerminalExpression.OBJID){
-			id = Integer.valueOf(lexer.getString());
-			simbolo = lexer.prossimoSimbolo();
-			p = pos();
+			if(lexer.getString().length() < 9){
+				id = Integer.valueOf(lexer.getString());
+				simbolo = lexer.prossimoSimbolo();
+				p = pos();
+			}
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 		}else
 			throw new SyntaxException("inserire L'id esempio -> 1");
 
@@ -103,9 +116,13 @@ public class Parser {
 
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == TerminalExpression.OBJID){
-			id = Integer.valueOf(lexer.getString());
-			simbolo = lexer.prossimoSimbolo();
-			p = pos();
+			if(lexer.getString().length() < 9){
+				id = Integer.valueOf(lexer.getString());
+				simbolo = lexer.prossimoSimbolo();
+				p = pos();
+			}
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 		}else
 			throw new SyntaxException("inserire L'id esempio -> 1");
 
@@ -116,18 +133,27 @@ public class Parser {
 		simbolo = lexer.prossimoSimbolo();
 		Integer id = 0;
 		if(simbolo == TerminalExpression.OBJID)
-			id = Integer.valueOf(lexer.getString());
+			if(lexer.getString().length() < 9){
+				id = Integer.valueOf(lexer.getString());
+			}
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 		return new Ungroup(id);
 	}
 
 	private Scale scale(){
-		Integer id;
+		Integer id=0;
 		Scale res = new Scale();
 
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == TerminalExpression.OBJID){
-			id = Integer.valueOf(lexer.getString());
-			simbolo = lexer.prossimoSimbolo();
+			if(simbolo == TerminalExpression.OBJID)
+				if(lexer.getString().length() < 9){
+					id = Integer.valueOf(lexer.getString());
+					simbolo = lexer.prossimoSimbolo();
+				}
+				else
+					throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 			if(simbolo == TerminalExpression.POSFLOAT)
 				res = new Scale(id, Double.valueOf(lexer.getString()));
 		}
@@ -143,27 +169,35 @@ public class Parser {
 
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == TerminalExpression.OBJID){
-			res.add(Integer.valueOf(lexer.getString()));
-			simbolo = lexer.prossimoSimbolo();
+			if(lexer.getString().length() < 9){
+				res.add(Integer.valueOf(lexer.getString()));
+				simbolo = lexer.prossimoSimbolo();
+			}
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 			while(simbolo == TerminalExpression.VIRGOLA) {
 				simbolo = lexer.prossimoSimbolo();
 				if (simbolo == TerminalExpression.OBJID) {
-					res.add(Integer.valueOf(lexer.getString()));
-					simbolo = lexer.prossimoSimbolo();
+					if(lexer.getString().length() < 9){
+						res.add(Integer.valueOf(lexer.getString()));
+						simbolo = lexer.prossimoSimbolo();
+					}
+					else
+						throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 				}
 			}
 		}
 		return res;
 	}
 
-	private Create create(){
+	private Create create() throws  SyntaxException{
 		TypeConstr tc = typeconstr();
 		Pos p = pos();
 		simbolo = lexer.prossimoSimbolo();
 		return new Create(tc, p);
 	}
 
-	private TypeConstr typeconstr(){
+	private TypeConstr typeconstr() throws SyntaxException{
 		simbolo = lexer.prossimoSimbolo();
 		TypeConstr res;
 		Pos p;
@@ -216,7 +250,10 @@ public class Parser {
 		Remove res;
 		simbolo = lexer.prossimoSimbolo();
 		if(simbolo == TerminalExpression.OBJID)
-			res = new Remove(Integer.valueOf(lexer.getString()));
+			if(lexer.getString().length() < 9)
+				res = new Remove(Integer.valueOf(lexer.getString()));
+			else
+				throw new SyntaxException("il valore id non può andare oltre 999.999.999");
 		else
 			throw new SyntaxException("atteso id");
 		return res;

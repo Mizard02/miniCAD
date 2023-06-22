@@ -101,7 +101,7 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 		repaint();
 	}
 
-	public double getID(GraphicObject go){
+	public Integer getID(GraphicObject go){
 		for (Map.Entry<Integer, GraphicObject> entry : objects.entrySet()) {
 			if (entry.getValue().equals(go)) {
 				return entry.getKey();
@@ -143,7 +143,7 @@ public class GraphicObjectPanel extends JComponent implements GraphicObjectListe
 
 	public Integer createGroup(ArrayList<Integer> listId){
 		for(Integer id : listId)
-			if(!objects.containsKey(id))
+			if(!objects.containsKey(id) && !groups.containsKey(id))
 				throw new SyntaxException("non esiste nessun oggetto con l'id fornito");
 		id+=1;
 		groups.put(id, listId);

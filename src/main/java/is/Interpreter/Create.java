@@ -31,6 +31,6 @@ public class Create extends CMD {
         MacroCommand mc = new MacroCommand(new NewObjectCmd(panel, go), new MoveCommand(go, new Point2D.Double(p.getX(), p.getY())));
         ch.handle(mc);
         System.out.println("l'ID dell'oggetto creato è " + panel.getID(go));
-        return null;
+        return panel.getID(go);
     }
 }

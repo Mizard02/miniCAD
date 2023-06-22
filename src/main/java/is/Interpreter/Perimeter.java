@@ -8,7 +8,6 @@ import is.shapes.view.GraphicObjectPanel;
 import java.util.ArrayList;
 
 public abstract class Perimeter extends CMD{
-    protected GraphicObjectPanel panel;
 
     protected UtilsImpl util;
 

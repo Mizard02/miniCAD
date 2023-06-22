@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public abstract class Area extends CMD{
 
-    protected GraphicObjectPanel panel;
     protected UtilsImpl util;
 
     abstract protected ArrayList<GraphicObject> getGraphicObjects();

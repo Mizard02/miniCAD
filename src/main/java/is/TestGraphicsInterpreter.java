@@ -111,5 +111,5 @@ public class TestGraphicsInterpreter {
 }
 //new circle (50.0) (100.0, 100.0)
 //new rectangle (100.0, 100.0) (200.0, 200.0)
-//new img ("C:\\Users\\Giuseppe\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\mini CAD\\src\\is\\shapes\\model\\NyaNya.gif") (300.0, 300.0)
+//new img ("C:\\Users\\Giuseppe\\OneDrive\\UNI\\SECONDO ANNO\\2 SEM\\Ing Del Software\\mini CAD\\src\\main\\java\\is\\shapes\\model\\NyaNya.gif") (300.0, 300.0)
 //mv 1 (2.0, 4.0)
